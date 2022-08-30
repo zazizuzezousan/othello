@@ -169,12 +169,12 @@ input{
     width: min(300px, 100%);
     height: calc(100% - 50px);
     top: 50px;
-    right: -300px;
+    left: -300px;
     background-color: white;
     overflow-y: auto;
     transition: 0.5s;
 }
 #historyInput:checked ~ #history{
-    right: 0;
+    left: clac(100% - min(300px, 100%));
     box-shadow: -5px 0px 20px black;
 }
