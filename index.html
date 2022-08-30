@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/b9f0094439.js" crossorigin="anonymous"></script>
+    <title>Othello</title>
+</head>
+<body>
+    <header id="header">
+        <div>
+            <label id=settingInputButton for="settingInput"><i class="fa-solid fa-gear fa-2xl"></i></label>
+            <h1>Othello</h1>
+            <label id=historyInputButton for="historyInput"><i class="fa-solid fa-book fa-2xl"></i></label>
+        </div>
+    </header>
+    <input type="checkbox" id="settingInput">
+    <input type="checkbox" id="historyInput">
+    <div id="OthelloBoard">
+        <div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div><div class="cells"><div class="tiles"></div></div>
+    </div>
+    <div id="guide"></div>
+    <div id="result">
+        <h2 id="winner"></h2>
+        <p class="resultDetail">白駒<span id="whiteTilesNumber" class="tilesNumber">29</span></p>
+        <p class="resultDetail">黒駒<span id="blackTilesNumber" class="tilesNumber">35</span></p>
+    </div>
+    <div id="setting">
+        <button id="gameStartButton">ゲームスタート</button>
+    </div>
+    <div id="history"></div>
+    <script src="script.js"></script>
+</body>
+</html>
