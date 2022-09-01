@@ -6,6 +6,8 @@ const $whiteTilesNumber = document.getElementById("whiteTilesNumber");
 const $blackTilesNumber = document.getElementById("blackTilesNumber");
 const $settingInput = document.getElementById("settingInput");
 const $gameStartButton = document.getElementById("gameStartButton");
+const $showMark = document.getElementById("showMark");
+const $missLimitSet = document.getElementById("missLimitSet");
 const $tiles = document.getElementsByClassName("tiles");
 const $tile = [].slice.call($tiles);
 let cell = new Array(64);
@@ -14,6 +16,10 @@ let flipOver = new Array(64);
 let turn = 0;
 let thin;
 let del;
+let missLimitNumber = 0;
+let blackMiss = 0;
+let whiteMiss = 0;
+let showMark = false;
 
 function start(){
     for(let i = 0; i < 64; i++){
@@ -22,6 +28,8 @@ function start(){
         flipOver[i].length = 0;
         installation[i] = false;
     }
+    blackMiss = 0;
+    whiteMiss = 0;
     $result.style.top = "-150px";
     putTile(27, -1);
     putTile(28, 1);
@@ -48,6 +56,7 @@ function putTile(place, color){
 function judge(place, color){
     installation[place] = false;
     flipOver[place].length = 0;
+    deleteMark(place);
     if(cell[place] == 0){
         let i = place + 1;
         let j = 0;
@@ -203,6 +212,7 @@ function judge(place, color){
             }
         }
     }
+    if(showMark) setMark(place);
 }
 function setMark(place){
     if(installation[place]){
@@ -231,7 +241,8 @@ function showMessage(message, color, time){
         $guide.style.display = "none";
     }, time);
 }
-function endMotion(){
+function endMotion(fail){
+    if(fail) for(let i = 0; i < 64; i++) putTile(i, -fail);
     turn = 0;
     const blackTiles = cell.filter(function(color){
         if(color == -1) return true;
@@ -298,7 +309,37 @@ function play(place){
                     break;
             }
         }
+    }else if(missLimitNumber > 0){
+        if(turn == 1){
+            blackMiss++;
+            if(blackMiss > missLimitNumber) endMotion(1);
+        }
+        if(turn == -1){
+            whiteMiss++;
+            if(whiteMiss > missLimitNumber) endMotion(-1);
+        }
     }
+}
+function showMarkSet(check){
+    showMark = check;
+    if(check){
+        for(let i = 0; i < 64; i++) setMark(i);
+        missLimitNumber = 0;
+        $missLimitSet.parentElement.style.display = "none";
+    }else{
+        for(let i = 0; i < 64; i++) deleteMark(i);
+        $missLimitSet.parentElement.style.display = "block";
+        if($missLimitSet.value) missLimitNumber = $missLimitSet.value;
+    }
+}
+function changeColor(color){
+    $othelloBoard.style.backgroundColor = color;
+}
+function missLimit(element, number){
+    if(number == 0){
+        element.value = "";
+    }
+    missLimitNumber = number;
 }
 
 window.onload = function(){

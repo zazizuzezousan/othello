@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="discription" content="オセロが遊べます！1人でも、友達と2人でも楽しめます！">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/b9f0094439.js" crossorigin="anonymous"></script>
     <title>Othello</title>
@@ -24,11 +25,19 @@
     <div id="guide"></div>
     <div id="result">
         <h2 id="winner"></h2>
-        <p class="resultDetail">白駒<span id="whiteTilesNumber" class="tilesNumber">29</span></p>
-        <p class="resultDetail">黒駒<span id="blackTilesNumber" class="tilesNumber">35</span></p>
+        <p class="resultDetail">白駒<span id="whiteTilesNumber" class="tilesNumber"></span></p>
+        <p class="resultDetail">黒駒<span id="blackTilesNumber" class="tilesNumber"></span></p>
     </div>
     <div id="setting">
         <button id="gameStartButton">ゲームスタート</button>
+        <div id="gameInfo">
+            <p>ターン</p>
+            <p>白駒<span class="tilesNumber whiteTilesNumber"></span></p>
+            <p>黒駒<span class="tilesNumber blackTilesNumber"></span></p>
+        </div>
+        <input type="checkbox" id="showMark" onchange="showMarkSet(this.checked)"><label class="checkInput" for="showMark">おける場所のヒント</label>
+        <p class="numberInput">お手付き回数制限<input type="number" min="0" value="" placeholder="無制限" id="missLimitSet" onchange="missLimit(this, this.value)"></p>
+        <p class="colorInput">オセロボードの色<input type="color" value="#006400" onchange="changeColor(this.value)"></p>
     </div>
     <div id="history"></div>
     <script src="script.js"></script>
