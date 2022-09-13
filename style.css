@@ -260,3 +260,30 @@ input[type="checkbox"]{
     right: 0;
     box-shadow: -5px 0px 20px black;
 }
+#showTurn{
+    text-align: center;
+}
+.showTilesNumber{
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20%;
+}
+#showBlackTilesNumber,#showWhiteTilesNumber{
+    position: absolute;
+    right: 20%;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: solid 1px black;
+    text-align: center;
+}
+#showBlackTilesNumber{
+    background-color: black;
+    color: white;
+}
+#showWhiteTilesNumber{
+    background-color: white;
+    color: black;
+}

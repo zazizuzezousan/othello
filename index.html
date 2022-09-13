@@ -25,17 +25,17 @@
     <div id="guide"></div>
     <div id="result">
         <h2 id="winner"></h2>
-        <p class="resultDetail">白駒<span id="whiteTilesNumber" class="tilesNumber"></span></p>
         <p class="resultDetail">黒駒<span id="blackTilesNumber" class="tilesNumber"></span></p>
+        <p class="resultDetail">白駒<span id="whiteTilesNumber" class="tilesNumber"></span></p>
     </div>
     <div id="setting">
         <button id="gameStartButton">ゲームスタート</button>
         <div id="gameInfo">
-            <p>ターン</p>
-            <p>白駒<span class="tilesNumber whiteTilesNumber"></span></p>
-            <p>黒駒<span class="tilesNumber blackTilesNumber"></span></p>
+            <p id="showTurn">ターン</p>
+            <p class="showTilesNumber">黒駒<span id="showBlackTilesNumber">0</span></p>
+            <p class="showTilesNumber">白駒<span id="showWhiteTilesNumber">0</span></p>
         </div>
-        <input type="checkbox" id="showMark" onchange="showMarkSet(this.checked)"><label class="checkInput" for="showMark">おける場所のヒント</label>
+        <input type="checkbox" id="showMark" onchange="showMarkSet(this.checked)"><label class="checkInput" for="showMark">設置可能ヒント</label>
         <p class="numberInput">お手付き回数制限<input type="number" min="0" value="" placeholder="無制限" id="missLimitSet" onchange="missLimit(this, this.value)"></p>
         <p class="colorInput">オセロボードの色<input type="color" value="#006400" onchange="changeColor(this.value)"></p>
     </div>

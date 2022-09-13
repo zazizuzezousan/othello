@@ -10,6 +10,9 @@ const $showMark = document.getElementById("showMark");
 const $missLimitSet = document.getElementById("missLimitSet");
 const $tiles = document.getElementsByClassName("tiles");
 const $tile = [].slice.call($tiles);
+const $showTurn = document.getElementById("showTurn");
+const $showBlackTilesNumber = document.getElementById("showBlackTilesNumber");
+const $showWhiteTilesNumber = document.getElementById("showWhiteTilesNumber");
 let cell = new Array(64);
 let installation = new Array(64);
 let flipOver = new Array(64);
@@ -35,9 +38,10 @@ function start(){
     putTile(28, 1);
     putTile(35, 1);
     putTile(36, -1);
-    turn = 1;
+    turn = -1;
     for(let i = 0; i < 64; i++) judge(i, turn);
-    showMessage("白のターン", "white", 2000);
+    showMessage("黒のターン", "black", 2000);
+    showGameInfo();
 }
 function putTile(place, color){
     cell[place] = color;
@@ -308,6 +312,7 @@ function play(place){
                     showMessage("黒のターン", "black", 2000);
                     break;
             }
+            showGameInfo();
         }
     }else if(missLimitNumber > 0){
         if(turn == 1){
@@ -333,13 +338,32 @@ function showMarkSet(check){
     }
 }
 function changeColor(color){
-    $othelloBoard.style.backgroundColor = color;
+    if(!(color == "#ffffff" || color == "#000000")){
+        $othelloBoard.style.backgroundColor = color;
+    }
 }
 function missLimit(element, number){
     if(number == 0){
         element.value = "";
     }
     missLimitNumber = number;
+}
+function showGameInfo(){
+    if(turn == -1){
+        $showTurn.innerText = "黒のターン";
+    }else if(turn == 1){
+        $showTurn.innerText = "白のターン";
+    }
+    const blackTiles = cell.filter(function(color){
+        if(color == -1) return true;
+        return false;
+    }).length;
+    const whiteTiles = cell.filter(function(color){
+        if(color == 1) return true;
+        return false;
+    }).length;
+    $showBlackTilesNumber.innerText = blackTiles;
+    $showWhiteTilesNumber.innerText = whiteTiles;
 }
 
 window.onload = function(){
