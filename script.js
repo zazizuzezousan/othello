@@ -13,6 +13,11 @@ const $tile = [].slice.call($tiles);
 const $showTurn = document.getElementById("showTurn");
 const $showBlackTilesNumber = document.getElementById("showBlackTilesNumber");
 const $showWhiteTilesNumber = document.getElementById("showWhiteTilesNumber");
+const $historyMenu = document.getElementById("historyMenu");
+const $setPlayerName = document.getElementById("setPlayerName");
+const $blackPlayerName = document.getElementById("blackPlayerName");
+const $whitePlayerName = document.getElementById("whitePlayerName");
+const $historyTitle = document.getElementById("historyTitle");
 let cell = new Array(64);
 let installation = new Array(64);
 let flipOver = new Array(64);
@@ -23,6 +28,7 @@ let missLimitNumber = 0;
 let blackMiss = 0;
 let whiteMiss = 0;
 let showMark = false;
+let histories = new Array();
 
 function start(){
     for(let i = 0; i < 64; i++){
@@ -280,6 +286,8 @@ function endMotion(fail){
     setTimeout(function(){
         $result.style.top = "50%";
     },3000);
+    showGameInfo();
+    setHistory(blackTiles, whiteTiles);
 }
 function play(place){
     if(installation[place] == true){
@@ -294,16 +302,6 @@ function play(place){
             endMotion();
         }else{
             turn *= -1;
-            for(let m = 0; m < 64; m++) judge(m, turn);
-            if(!installation.includes(true)){
-                showMessage("パス", "white", 2000);
-                turn *= -1;
-                for(let m = 0; m < 64; m++) judge(m, turn);
-                if(!installation.includes(true)){
-                    showMessage("パス", "white", 2000);
-                    setTimeout(endMotion(),2000);
-                }
-            }
             switch(turn){
                 case 1:
                     showMessage("白のターン", "white", 2000);
@@ -311,6 +309,26 @@ function play(place){
                 case -1:
                     showMessage("黒のターン", "black", 2000);
                     break;
+            }
+            for(let m = 0; m < 64; m++) judge(m, turn);
+            if(!installation.includes(true)){
+                setTimeout('showMessage("パス", "white", 2000)', 2000);
+                turn *= -1;
+                setTimeout(function(){
+                    switch(turn){
+                        case 1:
+                            showMessage("白のターン", "white", 2000);
+                            break;
+                        case -1:
+                            showMessage("黒のターン", "black", 2000);
+                            break;
+                    }
+                }, 4000)
+                for(let m = 0; m < 64; m++) judge(m, turn);
+                if(!installation.includes(true)){
+                    setTimeout('showMessage("パス", "white", 2000)', 6000);
+                    setTimeout(endMotion(),8000);
+                }
             }
             showGameInfo();
         }
@@ -365,6 +383,105 @@ function showGameInfo(){
     $showBlackTilesNumber.innerText = blackTiles;
     $showWhiteTilesNumber.innerText = whiteTiles;
 }
+function setHistory(black, white){
+    let history = new Object();
+    const createShowHistory = document.createElement("div");
+    createShowHistory.classList.add("showHistory");
+    let winner;
+    if(black > white){
+        winner = "黒の勝ち";
+    }else if(black == white){
+        winner = "引き分け";
+    }else{
+        winner = "白の勝ち"; 
+    }
+    const createShowHistoryWinner = document.createElement("p");
+    createShowHistoryWinner.classList.add("historyWinner");
+    createShowHistoryWinner.innerText = winner;
+    createShowHistory.appendChild(createShowHistoryWinner);
+    history.winner = winner;
+    if($blackPlayerName.value == ""){
+        $blackPlayerName.value = "player1";
+    }
+    if($whitePlayerName.value == ""){
+        $whitePlayerName.value = "player2";
+    }
+    const playerNames = $blackPlayerName.value + " VS " + $whitePlayerName.value;
+    const createShowHistoryNames = document.createElement("p");
+    createShowHistoryNames.classList.add("historyNames");
+    createShowHistoryNames.innerText = playerNames;
+    if($setPlayerName.checked){
+        createShowHistory.appendChild(createShowHistoryNames);
+        history.names = playerNames;
+    }
+    const createShowHistoryColor = document.createElement("p");
+    createShowHistoryColor.classList.add("historyColor");
+    createShowHistoryColor.innerText = "黒 : 白";
+    createShowHistory.appendChild(createShowHistoryColor);
+    const tiles = black + " : " + white;
+    const createShowHistoryTiles = document.createElement("p");
+    createShowHistoryTiles.classList.add("historyTiles");
+    createShowHistoryTiles.innerText = tiles;
+    createShowHistory.appendChild(createShowHistoryTiles);
+    history.tiles = tiles;
+    const date = new Date();
+    const now = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    const createShowHistoryDate = document.createElement("p");
+    createShowHistoryDate.classList.add("historyDate");
+    createShowHistoryDate.innerText = now;
+    createShowHistory.appendChild(createShowHistoryDate);
+    history.date = now;
+    $historyMenu.insertBefore(createShowHistory, $historyTitle.nextSibling);
+    histories.push(history);
+    if(window.localStorage){
+        localStorage.removeItem("othelloHistory");
+        let historiesJson = JSON.stringify(histories, undefined, 1);
+        localStorage.setItem("othelloHistory", historiesJson);
+    }
+}
+function readAndSetHistories(){
+    if(window.localStorage && !(localStorage.getItem("othelloHistory") === null)){
+        let historiesJson = localStorage.getItem("othelloHistory");
+        histories = JSON.parse(historiesJson);
+        for(let i = 0; i < histories.length; i++){
+            const createShowHistory = document.createElement("div");
+            createShowHistory.classList.add("showHistory");
+            const createShowHistoryWinner = document.createElement("p");
+            createShowHistoryWinner.classList.add("historyWinner");
+            createShowHistoryWinner.innerText = histories[i].winner;
+            createShowHistory.appendChild(createShowHistoryWinner);
+            if(histories[i].names){
+                const createShowHistoryNames = document.createElement("p");
+                createShowHistoryNames.classList.add("historyNames");
+                createShowHistoryNames.innerText = histories[i].names;
+                createShowHistory.appendChild(createShowHistoryNames);
+            }
+            const createShowHistoryColor = document.createElement("p");
+            createShowHistoryColor.classList.add("historyColor");
+            createShowHistoryColor.innerText = "黒 : 白";
+            createShowHistory.appendChild(createShowHistoryColor);
+            const createShowHistoryTiles = document.createElement("p");
+            createShowHistoryTiles.classList.add("historyTiles");
+            createShowHistoryTiles.innerText = histories[i].tiles;
+            createShowHistory.appendChild(createShowHistoryTiles);
+            const createShowHistoryDate = document.createElement("p");
+            createShowHistoryDate.classList.add("historyDate");
+            createShowHistoryDate.innerText = histories[i].date;
+            createShowHistory.appendChild(createShowHistoryDate);
+            $historyMenu.insertBefore(createShowHistory, $historyTitle.nextSibling);
+        }
+    }
+}
+function deleteHistories(){
+    localStorage.removeItem("othelloHistory");
+    const $histories = document.getElementsByClassName("showHistory");
+    console.log($histories.length);
+    let i = 0;
+    while(i < $histories.length){
+        $histories[i].remove();
+        console.log("delete");
+    }
+}
 
 window.onload = function(){
     for(let j = 0; j < 64; j++){
@@ -372,6 +489,7 @@ window.onload = function(){
             play($tile.indexOf(this));
         });
     }
+    readAndSetHistories();
     $gameStartButton.addEventListener("click", function(){
         start();
         $settingInput.checked = false;

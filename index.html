@@ -35,11 +35,16 @@
             <p class="showTilesNumber">黒駒<span id="showBlackTilesNumber">0</span></p>
             <p class="showTilesNumber">白駒<span id="showWhiteTilesNumber">0</span></p>
         </div>
+        <input type="checkbox" id="setPlayerName"><label class="checkInput" for="setPlayerName">プレイヤーネーム</label>
+        <p class="inputP textInput playerNameInput">先手(黒)の名前<input type="text" placeholder="名前" id="blackPlayerName"></p>
+        <p class="inputP textInput playerNameInput">後手(白)の名前<input type="text" placeholder="名前" id="whitePlayerName"></p>
         <input type="checkbox" id="showMark" onchange="showMarkSet(this.checked)"><label class="checkInput" for="showMark">設置可能ヒント</label>
-        <p class="numberInput">お手付き回数制限<input type="number" min="0" value="" placeholder="無制限" id="missLimitSet" onchange="missLimit(this, this.value)"></p>
-        <p class="colorInput">オセロボードの色<input type="color" value="#006400" onchange="changeColor(this.value)"></p>
+        <p class="inputP textInput">お手付き回数制限<input type="number" min="0" value="" placeholder="無制限" id="missLimitSet" onchange="missLimit(this, this.value)"></p>
+        <p class="inputP colorInput">オセロボードの色<input type="color" value="#006400" onchange="changeColor(this.value)"></p>
     </div>
-    <div id="history"></div>
+    <div id="historyMenu">
+        <h3 id="historyTitle">対戦履歴<button id="deleteHistories" onclick="deleteHistories()"><i class="fa-solid fa-trash-can"></i></button></h3>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
